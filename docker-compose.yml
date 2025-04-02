@@ -9,7 +9,6 @@ services:
       - codepush-data-storage:/data/storage
       - codepush-data-tmp:/data/tmp
     environment:
-      DOWNLOAD_URL: 'http://34.142.186.189:33000/download'
       RDS_HOST: 'codepush-mysql'
       STORAGE_DIR: '/data/storage'
       DATA_DIR: '/data/tmp'
