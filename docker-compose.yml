@@ -32,6 +32,8 @@ services:
       - ./sql/codepush-all-docker.sql:/docker-entrypoint-initdb.d/codepush-all.sql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'On'
+    ports:
+      - '33306:3306'
     networks:
       - postgres
   redis:
