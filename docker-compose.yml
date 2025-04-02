@@ -2,38 +2,54 @@ version: '3.7'
 services:
   server:
     image: shmopen/code-push-server:latest
+    container_name: codepush-server
+    env_file:
+      - .env
     volumes:
-      - data-storage:/data/storage
-      - data-tmp:/data/tmp
+      - codepush-data-storage:/data/storage
+      - codepush-data-tmp:/data/tmp
     environment:
-      DOWNLOAD_URL: 'http://YOUR_MACHINE_IP:3000/download'
-      TOKEN_SECRET: 'YOUR_JWT_TOKEN_SECRET'
-      RDS_HOST: 'mysql'
-      RDS_USERNAME: 'codepush'
-      RDS_PASSWORD: '123456'
-      RDS_DATABASE: 'codepush'
+      DOWNLOAD_URL: 'http://34.142.186.189:33000/download'
+      RDS_HOST: 'codepush-mysql'
       STORAGE_DIR: '/data/storage'
       DATA_DIR: '/data/tmp'
       NODE_ENV: 'production'
-      REDIS_HOST: 'redis'
+      REDIS_HOST: 'codepush-redis'
+      # VIRTUAL_HOST: 'codepush.glowvietnam.com'
+      # VIRTUAL_PORT: '33000'
+      # LETSENCRYPT_HOST: 'codepush.glowvietnam.com'
     ports:
-      - '3000:3000'
+      - '33000:3000'
     depends_on:
       - mysql
       - redis
+    # networks:
+      # - postgres
   mysql:
     image: mysql:latest
+    container_name: codepush-mysql
     volumes:
-      - data-mysql:/var/lib/mysql
+      - codepush-data-mysql:/var/lib/mysql
       - ./sql/codepush-all-docker.sql:/docker-entrypoint-initdb.d/codepush-all.sql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'On'
+    # networks:
+      # - postgres
   redis:
     image: redis:latest
+    container_name: codepush-redis
     volumes:
-      - data-redis:/data
+      - codepush-data-redis:/data
+    # networks:
+      # - postgres
+
 volumes:
-  data-storage:
-  data-tmp:
-  data-mysql:
-  data-redis:
+  codepush-data-storage:
+  codepush-data-tmp:
+  codepush-data-mysql:
+  codepush-data-redis:
+
+# networks:
+#   postgres:
+#     driver: bridge
+#     name: postgres
