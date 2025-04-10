@@ -1,21 +1,11 @@
-# Logs
-logs
-*.log
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.DS_Store
-bin/
-.nyc_output/
-
-# deps
+/nbproject/
+/.idea/*
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
 node_modules/
-
-
-# vs code
-.history
-.idea
-
-.env
+bin/
+obj/
+.vs/
