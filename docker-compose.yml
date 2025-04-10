@@ -13,7 +13,8 @@ services:
       STORAGE_DIR: '/data/storage'
       DATA_DIR: '/data/tmp'
       NODE_ENV: 'production'
-      REDIS_HOST: 'codepush-redis'
+      # REDIS_HOST: 'codepush-redis'
+      REDIS_HOST: 'redis'
       VIRTUAL_HOST: 'codepush.glowvietnam.com'
       VIRTUAL_PORT: '33000'
       LETSENCRYPT_HOST: 'codepush.glowvietnam.com'
@@ -21,7 +22,7 @@ services:
       - '33000:3000'
     depends_on:
       - mysql
-      - redis
+      # - redis
     networks:
       - postgres
   mysql:
@@ -36,13 +37,13 @@ services:
       - '33306:3306'
     networks:
       - postgres
-  redis:
-    image: redis:latest
-    container_name: codepush-redis
-    volumes:
-      - codepush-data-redis:/data
-    networks:
-      - postgres
+  # redis:
+  #   image: redis:latest
+  #   container_name: codepush-redis
+  #   volumes:
+  #     - codepush-data-redis:/data
+  #   networks:
+  #     - postgres
 
 volumes:
   codepush-data-storage:
